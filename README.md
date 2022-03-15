@@ -177,16 +177,19 @@ cons:
   * most common - it checks the key in cache, and if it si not there, hte apllication fetches it from the storage and then update the cache.
   * common pattern for using external cache such as Redis.
   * pros : 
-    * cache only what is needed
+    * cache only what is needed(data)
   * cons :
     * cache misses are expensive
     * data staleness
-    * implementation complexity
+    * implementation complexity (work with both the cache and the storage using two seprate APIs and two separate libraries)
     
 ![image](https://user-images.githubusercontent.com/25869911/158477223-a09a4fed-0712-4bc0-9b19-8a06278f8bad.png)
 
 
 * read through
+  * where application does not have direct access to the storage, but instead always interacts with the cache API.
+  * In case of cache miss, this API layer will fetch the results from storage, update them i cache and then return them to the application
+  * this pattern is quite common in ORM(Object relation mapping)
 
 
 * write through
