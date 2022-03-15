@@ -133,6 +133,73 @@ udemy is using cloudflare as their CDN
 
 ![image](https://user-images.githubusercontent.com/25869911/158474824-0769edef-3471-4760-908e-30e317b1b08c.png)
 
+static content -> images, css, html and javascript
+
+Type of CDN -> push or pull
+
+pull cdn -> when user request content will be trigger the changes. ideally when you have a lot of static content or resources.
+push cdn -> when the dev update image this will be pushed to the CDN -> this is only if there are few  resources. if there are a lot of resources this will be very expensive.
+
+### Summary
+
+* CDNs allow placing your static assets close to the users
+* Reduces costs
+* Decreases latency
+* Increses complexity of your system
+
+## Caching
+
+over CPUs have cache, browser has a cache, databases have caches. caches are everywhere.
+
+the goal of cache is to speed up getting some data from a slower storage. cache is in memory.
+but your browser stores data on disk as cache. so it won't need to access to network.
+you can use cache with database, if founded in cache it not need to hit to the database.
+
+
+### pros and cons
+
+pros : 
+
+* improve read performance(aka latency)
+* reduce the load(aka throughput)
+
+
+cons:
+
+* Increses complexity
+* consumes resources (memory of servers, or additional servers ifit is distrubuted caches)
+* introduces some incosistencies
+
+
+### caching strategies
+
+* cache aside
+  * most common - it checks the key in cache, and if it si not there, hte apllication fetches it from the storage and then update the cache.
+  * common pattern for using external cache such as Redis.
+  * pros : 
+    * cache only what is needed
+  * cons :
+    * cache misses are expensive
+    * data staleness
+    * implementation complexity
+    
+![image](https://user-images.githubusercontent.com/25869911/158477223-a09a4fed-0712-4bc0-9b19-8a06278f8bad.png)
+
+
+* read through
+
+
+* write through
+
+* write behind
+
+
+
+
+
+
+
+
 
 
 
