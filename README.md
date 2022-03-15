@@ -189,12 +189,43 @@ cons:
 * read through
   * where application does not have direct access to the storage, but instead always interacts with the cache API.
   * In case of cache miss, this API layer will fetch the results from storage, update them i cache and then return them to the application
-  * this pattern is quite common in ORM(Object relation mapping)
+  * this pattern is quite common in ORM(Object relational mapping) frameworks, the data would be usually stored in memory
+  * pros : 
+    * cache only what is needed
+    * work with a single API
+    * transparent (you are not even aware that there is a cache)
+  * cons :
+    * cache misses are expensive
+    * data staleness
+    * reliability - the probability that a product, system, or service will perform its intended function adequately for a specified period of time, or will operate in a defined environment without failure
+
+![image](https://user-images.githubusercontent.com/25869911/158479383-50f308ad-838f-4a03-8071-0a55e27303e4.png)
 
 
 * write through
+  * somewhat similar to read through, application interacts with the API, that for each update also stores data in cache.
+  * pros :
+    * data in cache is never stale(obsolet). up-to-date data. 
+  * cons : 
+    * writes are more expensive.  
+    * redundant data (there is a chance that we will write data to cache that no one ever reads) - Data redundancy occurs when the same piece of data exists in multiple places, whereas data inconsistency is when the same data exists in different formats in multiple tables.
+
+![image](https://user-images.githubusercontent.com/25869911/158480349-99c26b47-f3f3-4ccc-b4c6-9761b4f4aa29.png)
+
 
 * write behind
+  * very similar to write through. the only difference is that the data is not written immediately. instead, the cache will wait for more events, or for a timeout and only then flush everything to storage.
+  * cache act as a buffer
+  * pros : 
+    * no write penalty - write seems very fast. because we don't write to the slow storage every time
+    * reduced load on storage - update it in bulk.
+  * cons :
+    * reliability - if the cache crashes, we lose some of the updates.
+    * lack of consistency - if we don't flush the data from buffer often enough, it may create inconsistencies in our data.
+
+![image](https://user-images.githubusercontent.com/25869911/158481234-593a2cdb-19fe-4675-9f45-12b56c60ecfa.png)
+
+### Eviction Policies
 
 
 
