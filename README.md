@@ -227,11 +227,80 @@ cons:
 
 ### Eviction Policies
 
+Eventually, our cache becomes too large(many keys or to much memory).
+policies help us decide which of the elements we should remove.
+
+LRU - Least recentrly used - 
+
+* based on a linked list,  where they had points to the next item to be removed.
+* when there is a cache hit, the item moves to the tail of the list
+* most recentrly used become the tail of the list
+* if it's a cache miss, the new lement is added to the tail of the list, and pushes one element out.
+* very efficient algorithm (doensn't require much memory or CPU resources, but it suffers from something called false cache eviction)
+* False Cache Eviction - If a lot of new keys are requested at once, it may evict some popular keys.
+
+![image](https://user-images.githubusercontent.com/25869911/158483867-d6c0cb77-8109-4e92-86de-dc686243047e.png)
+
+![image](https://user-images.githubusercontent.com/25869911/158483940-aec989f0-72ed-4ca4-9981-f35b34a4f960.png)
+
+![image](https://user-images.githubusercontent.com/25869911/158484114-580806da-9a73-4725-9ad7-809e404538b7.png)
 
 
+LFU - Least frequently used
+
+* LFU solve false cache eviction
+* more complicated than LRU
+* every key will have a counter which is increment every once in a while.
+* when there is a cache hit, the counter of the key is reset.
+* if we look for joker, we reset the counter on that entry. but other entries keep increasing
+* when there is a cache miss, algorithm will take the key with the largest counter value and evict it.
+* elements that are accessed often stay in the cache forever.
+* but it has an overhead of keeping track of the counters for each entry.
+
+![image](https://user-images.githubusercontent.com/25869911/158484528-fc9fcc0e-91f2-4286-b136-bb53f7fb65ca.png)
+
+![image](https://user-images.githubusercontent.com/25869911/158484566-18a53673-cabf-4f9d-8326-cd7cd23d38d3.png)
+
+![image](https://user-images.githubusercontent.com/25869911/158484778-fa361cde-d6b9-4c1e-8941-c2d14ec17a07.png)
+
+... etc
+
+https://medium.datadriveninvestor.com/all-things-caching-use-cases-benefits-strategies-choosing-a-caching-technology-exploring-fa6c1f2e93aa
+https://en.wikipedia.org/wiki/Cache_replacement_policies
+
+### Summary
+
+* most caches use LRU as the default
+* LRU is faster and cheaper in terms on memory than LFU
+* LFU suffers less from false cache eviction
+
+### Redis
+
+Using redis as distributed cache. 
 
 
+Redis
 
+* In-memory, key-value store, limited by ram(Biggest servers are around 500 gb ram at the moment)
+* supports 100,000 requests per second on a single node
+
+key-value means acts similiar to a hash map or a dictionary.
+
+![image](https://user-images.githubusercontent.com/25869911/158485538-ca90585e-12cb-4046-9b2f-728b567806ff.png)
+
+key is string
+value can be string, list, set, hash and some others
+
+data structures only can contains string.
+
+you cannot operate directly on nested structures in Redis, like you could read MongoDB.
+
+Redis keys also support TTL(Time to Live) - when you put a key in your Redis, you also tell it for how long it should be stored, in seconds.
+
+![image](https://user-images.githubusercontent.com/25869911/158485907-ab488393-a1a0-478b-b816-89a77586cb9d.png)
+
+
+TTL is help we avoid that the redis is going to quickly run out of memory
 
 
 
