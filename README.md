@@ -303,8 +303,35 @@ Redis keys also support TTL(Time to Live) - when you put a key in your Redis, yo
 TTL is help we avoid that the redis is going to quickly run out of memory
 
 
+Redis supports persistence, it can save data to the disk. this is important , because when redis instance crashes if everything was stored in memory, it will task some time to repopulate itself. and during that time our application will be slow. we can avoid this delay recovering our cache from the disk.
+
+![image](https://user-images.githubusercontent.com/25869911/158486460-9138eafb-4177-4012-a8f1-76d7456aca01.png)
 
 
+If redis is both fast and can persist data, why use it only as cache ?
+in order to be performant, it persists data only every second.
+so if it crashes, last second of data may be lost. example thousands of data is lost.
+
+![image](https://user-images.githubusercontent.com/25869911/158486678-1158046d-a8ba-4563-843e-84347ad45cbb.png)
+
+some system can afford that(lost of thousands of data lost), it is always a trandoff.
+
+### summary
+
+* Redis is the most popular cache solution at the moment (key-value sotres)
+* Extremely fast(high throughput)
+* Limited by Ram
+* Stores data to disk, but can loose recent data.
+* if you need to store hundreds of gigabytes in cache, you will need more than one instance of redis.
+
+
+The tradeoffs of using Redis is that it is usually a remote service, so there is some network latency and also added complexity.
+
+you need to think about what should you do if you cannot connect the Redis ?
+Does your application crashes ? 
+can you work the database or another service directly in the meantime ?
+
+## Queue
 
 
 
