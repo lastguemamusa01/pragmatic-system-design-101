@@ -425,3 +425,24 @@ rabbitMq - message brokers
 ![image](https://user-images.githubusercontent.com/25869911/160304870-327a3a0b-d7c4-46c1-bd0a-1fd146efaef7.png)
 
 
+* Exchange - is a router or a load balancer that recieves all the messages and then put them correct them in correct queue
+  * Direct - it will just put the message in the queue of that name. if there are multiple consumers fot that queue, similiar sending a round robin. (message Queueing)
+  * Topic/Header - this queue is sharded. example: your routing key contains a country, and then each country has a seprate queue. (payment options are different for different countries ) (message Queueing)
+  * Fan out - all the consumers will receive the same message. (Pub/Sub messaging model)
+  
+![image](https://user-images.githubusercontent.com/25869911/160305181-489e7166-d0c1-484c-9525-5a2a9d3f7587.png)
+
+![image](https://user-images.githubusercontent.com/25869911/160305197-9b3dc9ff-153e-437b-85a4-7a1e861a6d2f.png)
+
+
+![image](https://user-images.githubusercontent.com/25869911/160305203-ccf0d5db-b5ce-472c-a6f8-ce7dd6a28947.png)
+
+![image](https://user-images.githubusercontent.com/25869911/160305212-01d941e8-5271-4630-8f2a-508451c10ab0.png)
+
+
+
+
+
+
+* Channels
+
