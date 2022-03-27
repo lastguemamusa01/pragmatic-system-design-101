@@ -333,6 +333,91 @@ can you work the database or another service directly in the meantime ?
 
 ## Queue
 
+Queue or Message Queue
+
+![image](https://user-images.githubusercontent.com/25869911/160303660-a13a2c18-ae08-4bfa-8d29-24f6276c5bb7.png)
+
+synch app problem -> if one process is having a lot of request and the service down, the entire process need to wait to continue.
+
+asynchronous messaging
+
+queus are used to develiver messages asynchronously.
+this decouple the services
+when queue is used, the service there is 2 role. producer and consumer
+
+the services can be written in different languages but can connected.
+producer and consumer are independent, just concerning there roles.
+
+queue is acted as buffer. 
+
+when consumer crashes, still data is not lost. data is remaining in the queue.
+
+synchronous - you know always what happens to the payment service, like insufficient fond message
+asyncchronous - you don't know what happens. this add complexities.
+
+![image](https://user-images.githubusercontent.com/25869911/160304007-a15ebc62-972f-48e9-97e5-3c88ee3e0590.png)
+
+examples : 
+* apache kafka
+* rabbitMQ
+* amazon SQS
+* apache activeMQ
+
+### Summary
+
+* Pros
+  * Buffering
+  * Request spikes smoothing
+  * Message durability
+* Cons
+  * Increase system complexity
+  * Increases latency
+
+### Messaging Paradigms
+
+Messaging models :
+
+* Message queue
+* Publisher/Subscriber( aka Pub/Sub)
+
+* Message Queueing
+  * if we want for a message to arrive to only a single instance of a service, we would use a message queue.
+  * The more consumers we add, the more messages we are able to process simultaneously
+  * even if one instance of consumer(service) is down, will chose another instance. 
+
+![image](https://user-images.githubusercontent.com/25869911/160304334-c73881ab-1999-4432-ab6c-035b215b0b5e.png)
+
+![image](https://user-images.githubusercontent.com/25869911/160304336-f82d6b30-7c2b-49b3-9782-32674f622bd9.png)
+
+
+* Pub/Sub
+  * is used in cases when you want to notify multiple other services about an event that happened.
+  * paytment services need to notify payment successful to receipts and billing services
+  * since there is no retry mechanism in that mode messages arrive to the consumer in the same order they are published 
+
+### Summary
+
+* Message Queueing
+  * Action
+  * Exactly once delivery
+  * Messages can arrive out of order(but due to retry mechanism, some older messagers may arrive out of order)
+* Cons
+  * Notification
+  * At least once delivery
+  * Messages are always in order(there are not retries)
+
+### RabbitMQ
+
+rabbitMq - message brokers
+
+* based on AMQP protocol(ALSO ActiveMQ from apache use this protocol)
+* (default) messages are store until consumer retrieves them(message read it and deleted) (this behavior can be changed)
+* is often used to schedule some heavy tasks in the background. (Offloads heavy tasks)
+  * examples: payment processing, resizing of images, running reports, and so on.
+* Distrubtes tasks(used to distrbute load between multiple servers where each gets some work to do)
+
+* Routing keys - every rabbitMq message has a key and it represents the address of the queue it needs to go to.
+  * you can use semicolons to add more details like order, amount of payment, country
 
 
 
