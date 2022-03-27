@@ -440,9 +440,75 @@ rabbitMq - message brokers
 ![image](https://user-images.githubusercontent.com/25869911/160305212-01d941e8-5271-4630-8f2a-508451c10ab0.png)
 
 
+* Channels - rabbitMQ consumers use TCP connections that they establish to the queue. to consume messages faster you can establish multiple TCP connections from different threads in the same service. but tcp connections are expensives. Instead, rabbitmq has channels. it will establish one connection, but each thread will get a seprate channel(resources optiomization)
+* it allows a single service to process much more messages without any overhead.
+
+![image](https://user-images.githubusercontent.com/25869911/160305959-f53d3243-2d62-42e6-918c-51b5a6ca38db.png)
+
+![image](https://user-images.githubusercontent.com/25869911/160305960-ccab75ca-cb78-441e-a5d5-4b46e6f46746.png)
 
 
+* Acknowledgements - when we remove the messages from the queue, 
+  * Automatic
+  * Explicit 
+
+after message was delivered. but what if it takes some time to process the message, like payment and the service crashes. then the message is lost, because we already deleted from our queue. instead, we can force consumers to acknowledge that the message can be deleted. The service will decide when to acknowledge. it can acknowledge right away, or store the message somewhere and then acknowledge, or fully processed the message and only then ackknowledge it. 
+
+Trade-off (chocie between complexity with scalability vs realiability )
+the queue is a reliable manner(not losing any messages), but our queue will grow bigger and bigger. or we delete messages ASAP. keeping our queue small, but risk losing some of them
+
+![image](https://user-images.githubusercontent.com/25869911/160305963-f5ca5015-1726-4d3c-a106-b7240b5d45a0.png)
+
+### Summary
+
+* Best used as message queue (main use is to request asynchronous action from a single service in a cluster)
+* Can also function as pub/sub
+* Provides reliability through acknoledgements(even consumers crashes)
+* provides concurrency through channels 
+
+### Kafka
+
+* most popular pub/sub system
+* event-streaming platform
+* messages are stored for a period of time
+
+pub/sub system , messages are not deleted after they are consumed. instead, they are deleted after a period of time.
 
 
-* Channels
+* topics - in kafka terms queues are called topics. 
+
+![image](https://user-images.githubusercontent.com/25869911/160306404-8a0c762c-f46c-4efc-9bf0-55aec3bbb170.png)
+
+
+payment_sucess is name of topic
+
+* events - in kafka messages are called events. each event has a key, value and timestamp. 
+
+![image](https://user-images.githubusercontent.com/25869911/160306491-35b9c870-586b-4917-983c-11e79054f26b.png)
+
+
+* partitions - kafka topics are usally shared, or in kafka terms, partitioned.
+if the key for topic is integer, and we want 4 partitions.
+
+![image](https://user-images.githubusercontent.com/25869911/160306423-c00f1699-b5a7-4564-9529-051740df1dbf.png)
+
+
+if producer send with key 9, this will go to the 4th partition
+
+the consumers divide partitions between themselves. 
+
+Deciding on a correct number of partitions is very important using kafka.
+important: if there are more consumers than partitions, some of them won't receive any events at all
+
+![image](https://user-images.githubusercontent.com/25869911/160306445-bb428ced-54da-42a6-bda2-fd86f6d845be.png)
+
+have as many partitions in topic, as the maximum number of instances of a single service that consumes from it.
+
+partitions is great way to increase throughput of kafka. but having too many of them may increase the latency of the queue.
+
+partitions . pros -> higher throughput, cons -> latency
+
+kafka uses consumer groups - only the consumer that is subscribed to that partition will get the events. all instances of the same service will have the same consumer group
+
+![image](https://user-images.githubusercontent.com/25869911/160306453-4ba32352-58fe-4f1c-9022-36a3955e552c.png)
 
