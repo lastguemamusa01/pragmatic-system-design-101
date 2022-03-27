@@ -395,6 +395,9 @@ Messaging models :
   * paytment services need to notify payment successful to receipts and billing services
   * since there is no retry mechanism in that mode messages arrive to the consumer in the same order they are published 
 
+![image](https://user-images.githubusercontent.com/25869911/160304862-8476626c-3335-4b84-8335-4dc029ce7e1f.png)
+
+
 ### Summary
 
 * Message Queueing
@@ -419,5 +422,6 @@ rabbitMq - message brokers
 * Routing keys - every rabbitMq message has a key and it represents the address of the queue it needs to go to.
   * you can use semicolons to add more details like order, amount of payment, country
 
+![image](https://user-images.githubusercontent.com/25869911/160304870-327a3a0b-d7c4-46c1-bd0a-1fd146efaef7.png)
 
 
