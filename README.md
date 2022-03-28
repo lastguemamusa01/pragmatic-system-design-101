@@ -508,7 +508,32 @@ partitions is great way to increase throughput of kafka. but having too many of 
 
 partitions . pros -> higher throughput, cons -> latency
 
-kafka uses consumer groups - only the consumer that is subscribed to that partition will get the events. all instances of the same service will have the same consumer group
+kafka uses consumer groups - only the consumer that is subscribed to that partition will get the events. all instances of the same service will have the same consumer group. different services will have different consumer groups. all consumer groups will get message once. but only one instance of the same service will read the message.
 
 ![image](https://user-images.githubusercontent.com/25869911/160306453-4ba32352-58fe-4f1c-9022-36a3955e552c.png)
+
+* consumer offsets - each consumer reads messages ffrom a queue at its own pace, when consumers reads a message, it simply increses its offset.
+  * if on eone the consumers crashes, no messages are lost.
+
+![image](https://user-images.githubusercontent.com/25869911/160306833-6f8ab07d-2bf6-4279-af7f-7076f970cbb6.png)
+
+![image](https://user-images.githubusercontent.com/25869911/160306840-4cab4118-903e-4bf1-a970-878590e08bf7.png)
+
+* producers - in the meantime, always append new events to the end of the queue.
+  * appending is very fast operation
+  * the order the events were sent is always perserved
+
+![image](https://user-images.githubusercontent.com/25869911/160306853-fa72d896-86b3-4ce8-a69c-a7cc993e4361.png)
+
+
+### summary
+
+* best used as pub/sub
+* due to its architecture, has very high throughput, can process 100k+ events per second
+* slow consumers don't affect queue performance
+
+## Protocols
+
+
+
 
