@@ -534,6 +534,40 @@ kafka uses consumer groups - only the consumer that is subscribed to that partit
 
 ## Protocols
 
+* TCP protocol - Transmission control protocol
+  * tcp is most common protocol when developing distrbuted systems and it is the backbone of the internet
+  * TCP is everywhere.
+
+![image](https://user-images.githubusercontent.com/25869911/160307551-417c9bb3-d195-47e6-bc93-acdf281fa576.png)
+
+* pros
+  * reliable
+    * sender : hey i want to send something like picture
+    * receiver: confirms the connections. ok 
+    * payload is broken into pieces called packages
+    * divide and send by chunking
+    * after getting each piece, receivers confirms that everhing is al right. 
+    * for every package send by tcp start a new timer. if the receiver doesn't acknowledge the package, sender will transmit it again(reliability in the context of TCP protocol).
+    * acknoledge that you receive package or timeout occurs, sender wil send again.
+  * ordered
+    * TCP protocols also numbers each package. 
+    * if image is broken by 4 pieces, each piece have sequence number.
+    * reciever gets each message and checks what is the equence number on it
+    * example: if package number 2 is lost, and package number 3 received by receiver. the receiver will request to the sender the package number 2 again.  
+  * error-checked
+    * tcp protocol also adds checksums for each package.
+    * checksum is a number that is calculated based on the content of the message.
+    * checksum is attached each package
+    * in case of the messge is corrupted during transfer, receiver knows about it.
+    * receiver it canlculated the checksum and compare what sended calculated
+    * if the checksum have difference, receiver request again to send the message again
+    * 
+* cons 
+  * slower than some other protocols
+
+* UDP protocol
+
+
 
 
 
