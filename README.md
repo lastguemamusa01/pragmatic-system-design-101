@@ -561,7 +561,6 @@ kafka uses consumer groups - only the consumer that is subscribed to that partit
     * in case of the messge is corrupted during transfer, receiver knows about it.
     * receiver it canlculated the checksum and compare what sended calculated
     * if the checksum have difference, receiver request again to send the message again
-    * 
 * cons 
   * slower than some other protocols
 
